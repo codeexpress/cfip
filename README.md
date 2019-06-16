@@ -1,4 +1,4 @@
-# All Cloudflare IP addresses
+# Is a given IP a Cloudflare IP address?
 `cfip` is a script that checks if a given IP address is a Cloudflare IP address. It can be run as:
 - a standlone tool
 - a HTTP API
