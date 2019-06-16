@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	Version = "1.0.0"
+	Version = "1.0.1"
 )
 
 var (
@@ -50,17 +50,17 @@ func main() {
 func setupServer() {
 	http.HandleFunc("/cfip/", func(w http.ResponseWriter, r *http.Request) {
 		input := strings.Split(r.URL.Path, "/")[2]
-		if input == "list" {
+		if input == "ips-v4.gz" {
 			// Read static file and send it
-			// A cron job that does the following creates this file every n hours
-			// $ curl -s https://www.cloudflare.com/ips-v4 | ./cidr2ip > ip-v4.txt
-			ips, _ := ioutil.ReadFile("ips-v4.txt")
-			fmt.Fprintf(w, string(ips))
-		} else { //presume a ip address
+			// A cron job creates this file every 6 hours
+			// $ curl -s https://www.cloudflare.com/ips-v4 | ./cidr2ip | gzip > ips-v4.gz
+			ips, _ := ioutil.ReadFile("ips-v4.gz")
+			w.Write(ips)
+		} else { //an ip address, presumably
 			fmt.Fprintf(w, checkIP(input))
 		}
 	})
-	http.ListenAndServe(":"+strconv.Itoa(*serverPtr), nil)
+	http.ListenAndServe("127.0.0.1:"+strconv.Itoa(*serverPtr), nil)
 }
 
 // takes in a ip address and checks if it belongs to
