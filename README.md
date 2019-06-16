@@ -4,7 +4,7 @@
 - a HTTP API
 
 ## Cloud
-`cfip` runs as an API on api.code.express. Invoke as following to check IPv4 and IPv6 addresses respectively:
+`cfip` runs as a API endpoint on api.code.express. To check IPv4 and IPv6 addresses respectively. Invoke it as follows following:
 
 https://api.code.express/cfip/104.31.122.34
 
