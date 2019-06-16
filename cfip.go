@@ -50,6 +50,11 @@ func main() {
 func setupServer() {
 	http.HandleFunc("/cfip/", func(w http.ResponseWriter, r *http.Request) {
 		input := strings.Split(r.URL.Path, "/")[2]
+
+		//log request on stdout
+		fmt.Print(time.Now().Format("Mon Jan _2 15:04:05 2006"))
+		fmt.Printf(" => %s %s %s\n", r.Header.Get("X-Forwarded-For"), r.Method, r.URL)
+
 		if input == "ips-v4.gz" {
 			// Read static file and send it
 			// A cron job creates this file every 6 hours
@@ -57,10 +62,14 @@ func setupServer() {
 			ips, _ := ioutil.ReadFile("ips-v4.gz")
 			w.Write(ips)
 		} else { //an ip address, presumably
-			fmt.Fprintf(w, checkIP(input))
+			fmt.Fprintf(w, checkIP(input)+"\n")
 		}
 	})
-	http.ListenAndServe("127.0.0.1:"+strconv.Itoa(*serverPtr), nil)
+	port_str := strconv.Itoa(*serverPtr)
+	fmt.Println("Serving on port " + port_str + ". To query, either:")
+	fmt.Println("Use curl. Eg. 'curl http://localhost:" + port_str + "/cfip/104.32.122.34' or")
+	fmt.Println("open the URL in the browser")
+	http.ListenAndServe("127.0.0.1:"+port_str, nil)
 }
 
 // takes in a ip address and checks if it belongs to
