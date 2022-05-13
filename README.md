@@ -19,6 +19,12 @@ Please do not use this for production use cases or cause undue load on the serve
 Latest versions can be downloaded from the
 [Release](https://github.com/codeexpress/cfip/releases) tab above.
 
+### Using go install
+If you have golang tools installed, you can install `cfip` as follows:
+```
+$ go install github.com/codeexpress/cfip@latest
+```
+
 ### Build from source
 This is a golang project with no dependencies. Assuming you have golang compiler installed,
 the following will build the binary from scratch
